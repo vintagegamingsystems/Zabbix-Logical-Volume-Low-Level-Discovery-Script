@@ -16,8 +16,6 @@
 declare -a volumeGroups
 volumeGroups=$(ls -l /dev | grep "^d" | awk '{print $9}' | grep -v "^block$\|^bsg$\|^char$\|^cpu$\|^disk$\|^hugepages$\|^input$\|^mapper$\|^net$\|^pts$\|^raw$\|^shm$")
 # Grep -v find the inverse of the expression. So it will not find the directory block or bsg or...
-x=0
-y=0
 echo "{"
 echo "\"data\":["
 for vg in ${volumeGroups[@]}
@@ -26,13 +24,11 @@ for vg in ${volumeGroups[@]}
         lv=$(ls /dev/$vg)
         # Lists the files within the /dev directory with the $vg variable appended to the end and 
         # places contents within the $lv variable.
-        ((x++))
         for multiplelv in ${lv[@]}
         # For volumegroups with multiple logical volumes this for loop with only print those that are needed.
                 do
                 path=/dev/$vg/$multiplelv
                 echo "{ \"{#LVDEVPATH}\" : \"$path\" },"
-                ((y++))
                 done
         done
 echo "]"
