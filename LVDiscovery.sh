@@ -31,10 +31,7 @@ for vg in ${volumeGroups[@]}
         # For volumegroups with multiple logical volumes this for loop with only print those that are needed.
                 do
                 path=/dev/$vg/$multiplelv
-                if [[ "$y" -le "$x" ]]
-                then
                 echo "{ \"{#LVDEVPATH}\" : \"$path\" },"
-                fi
                 ((y++))
                 done
         done
